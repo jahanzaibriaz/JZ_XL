@@ -1,8 +1,3 @@
-# jz_finance_v0.1
-Some very helpful finance functions
-
-
-
 # JZ Finance
 
 **JZ Finance is a library of various useful financial functions to generate various schedules, tables and analysis using one simple formula** This library is written using Excel built-in formulas and lambda functions to hide the complexities of combining multiple excel functions.

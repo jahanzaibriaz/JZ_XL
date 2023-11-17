@@ -4,7 +4,30 @@ Contributor: @jahanzaibriaz
 TESTED: Microsoft Excel 365 []
 */
 
-Loan_Schedule = LAMBDA(
+// return the name and version of the library
+JZ.VERSION = LAMBDA("JZ Finance v0.1");
+
+// generate loan schedule based on following inputs
+// 1. annual_rate (Required)
+//    Description: interest rate per annum, it's divided by 12 to calculate monthly interest
+//    Format: 0.06 (i.e. 6% per year which equates to 0.5% per month)
+// 2. months (Required)
+//    Description: loan duration in months
+//    Format: 36 (i.e. 3 years)
+// 3. loan_amount (Required)
+//    Description: loan amount
+//    Format: 100,000
+// 4. balloon_payment_at_end (Optional: Default value = 0)
+//    Description: If there is large payment at the end of the loan
+//    Format: 20,000
+// 5. type (Optional: Default value = 0)
+//    Description: Whether payments are made at the beginning of the month or end of the month
+//    Format: 0 = end of the month payments, 1 = beginning of the month payments
+// 6. cols_order (Optional: Default value = All Columns in default order)
+//    Description: An array of columns to be displayed. Columns will appear in the same sequence as defined in the array
+//    Format: {"Month", "Monthly Payment", "Principal", "Interest"}
+
+JZ.Loan_Schedule = LAMBDA(
     annual_rate,months,loan_amount,[balloon_payment_at_end],[type],[cols_order],
     
     LET(

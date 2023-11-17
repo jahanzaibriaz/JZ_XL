@@ -32,4 +32,4 @@ JZ Finance is [MIT licensed](https://github.com/jahanzaibriaz/jz_finance/blob/ma
 You could [open an issue](https://github.com/jahanzaibriaz/jz_finance/issues).
 
 ## Full list of functions
-- `JZ.LOAN_SCHEDULE`: generates the loan schedule
+- [`JZ.LOAN_SCHEDULE`](Functions.md): generate the full loan schedule, selected columns, selected rows or individual data point. It takes following aruments

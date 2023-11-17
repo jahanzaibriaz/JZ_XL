@@ -1,0 +1,86 @@
+/*
+Repository: []
+Contributor: @jahanzaibriaz
+TESTED: Microsoft Excel 365 []
+*/
+
+// return the name and version of the library
+JZ.VERSION = LAMBDA("JZ Finance v0.1");
+
+// generate loan schedule based on following inputs
+// 1. annual_rate (Required)
+//    Description: interest rate per annum, it's divided by 12 to calculate monthly interest
+//    Format: 0.06 (i.e. 6% per year which equates to 0.5% per month)
+// 2. months (Required)
+//    Description: loan duration in months
+//    Format: 36 (i.e. 3 years)
+// 3. loan_amount (Required)
+//    Description: loan amount
+//    Format: 100,000
+// 4. balloon_payment_at_end (Optional: Default value = 0)
+//    Description: If there is large payment at the end of the loan
+//    Format: 20,000
+// 5. type (Optional: Default value = 0)
+//    Description: Whether payments are made at the beginning of the month or end of the month
+//    Format: 0 = end of the month payments, 1 = beginning of the month payments
+// 6. cols_order (Optional: Default value = All Columns in the order given below under Posible Values)
+//    Description: An array of columns to be displayed. Columns will appear in the same sequence as defined in the array
+//    Format: {"Month", "Monthly Payment", "Principal", "Interest"}
+//    Possible Values: "Month","Monthly Payment","Interest","Principal","Opening Balance","Ending Balance","Cumulative Interest","Cumulative Principal"
+// 7. rows_order (Optional: Default Value = All rows from 1 to total number of months)
+//    Description: An array of rows to be displayed. Rows will appear in the same sequence as defined in the array
+//    Format: {3, 5} (To show 3rd and 5th month data only)
+
+JZ.Loan_Schedule = LAMBDA(
+    annual_rate,months,loan_amount,[balloon_payment_at_end],[type],[cols_order],[rows_order],
+    
+    LET(
+        balloon_payment_at_end_val, if(ISOMITTED(balloon_payment_at_end),0, balloon_payment_at_end),
+        type_val, if(ISOMITTED(type),0,type),
+
+        cols, {
+            "Month",
+            "Monthly Payment",
+            "Interest",
+            "Principal",
+            "Opening Balance",
+            "Ending Balance",
+            "Cumulative Interest",
+            "Cumulative Principal"
+        },
+        matched_cols, MAP(cols_order, LAMBDA(val, IF(ISERROR(MATCH(val, cols, 0)), "", val))),
+        filtered_cols, IFERROR(FILTER(matched_cols, matched_cols <> ""), {"Invalid Column(s)"}),
+        cols_to_display, IF(ISOMITTED(cols_order), cols, filtered_cols),
+        cols_indices, MAP(cols_to_display, LAMBDA(col_header, MATCH(col_header, cols, 0))),
+        total_cols, COUNTA(cols_to_display),
+        
+        filtered_rows, FILTER(rows_order, (rows_order > 0) * (rows_order <= months)),
+        rows_to_display, IF(ISOMITTED(rows_order),MAKEARRAY(months, 1, LAMBDA(row, col, row)),filtered_rows),
+        total_rows, COUNTA(rows_to_display),
+        
+        monthly_rate, annual_rate / 12,
+        rounding_digits, 8,
+        monthly_payment, ROUND(-PMT(monthly_rate, months, loan_amount, balloon_payment_at_end_val, type_val),rounding_digits),
+
+        VSTACK(
+            cols_to_display,
+            MAKEARRAY(total_rows,total_cols,LAMBDA(row, col,
+                LET(
+                    col_index, INDEX(cols_indices, col),
+                    row_number, INDEX(rows_to_display, row),
+                    CHOOSE(col_index,
+                        row_number,
+                        monthly_payment,
+                        ROUND(IPMT(monthly_rate,row_number,months,-loan_amount,balloon_payment_at_end_val,type_val),rounding_digits),
+                        ROUND(PPMT(monthly_rate,row_number,months,-loan_amount,balloon_payment_at_end_val,type_val),rounding_digits),
+                        ROUND(FV(monthly_rate, row_number - 1, monthly_payment, -loan_amount, type_val),rounding_digits),
+                        ROUND(FV(monthly_rate, row_number, monthly_payment, -loan_amount, type_val),rounding_digits),
+                        ROUND(-CUMIPMT(monthly_rate, months, loan_amount, 1, row_number, type_val),rounding_digits),
+                        ROUND(-CUMPRINC(monthly_rate, months, loan_amount, 1, row_number, type_val),rounding_digits)
+                        )
+                    )
+                )
+            )
+        )
+    )
+)

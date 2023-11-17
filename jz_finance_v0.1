@@ -1,1 +1,39 @@
+/*
+Repository: []
+Contributor: @jahanzaibriaz
+TESTED: Microsoft Excel 365 []
+*/
 
+Loan_Schedule = LAMBDA(
+    annual_rate,months,loan_amount,[balloon_payment_at_end],[type],[cols_order],
+    
+    LET(
+        cols, {"Month","Monthly Payment","Interest","Principal","Opening Balance","Ending Balance","Cumulative Interest","Cumulative Principal"}, 
+        matched_cols, MAP(cols_order, LAMBDA(val, IF(ISERROR(MATCH(val, cols, 0)), "", val))), 
+        filtered_cols, IFERROR(FILTER(matched_cols, matched_cols <> ""), {"Invalid Column(s)"}), 
+        cols_to_display, IF(ISOMITTED(cols_order), cols, filtered_cols), 
+        cols_indices, MAP(cols_to_display, LAMBDA(col_header, MATCH(col_header, cols, 0))), 
+        total_cols, COUNTA(cols_to_display), 
+        monthly_rate, annual_rate / 12, 
+        rounding_digits, 8, 
+        monthly_payment, ROUND(PMT(monthly_rate, months, loan_amount, balloon_payment_at_end, type), rounding_digits), 
+        
+        VSTACK(
+            cols_to_display, 
+            MAKEARRAY(months, total_cols, LAMBDA(row,col, 
+                LET(col_index, INDEX(cols_indices, col), 
+                    CHOOSE(col_index, 
+                        row, 
+                        monthly_payment, 
+                        ROUND(IPMT(monthly_rate, row, months, loan_amount, balloon_payment_at_end, type), rounding_digits), 
+                        ROUND(PPMT(monthly_rate, row, months, loan_amount, balloon_payment_at_end, type), rounding_digits),
+                        ROUND(FV(monthly_rate, row - 1, monthly_payment, loan_amount, type), rounding_digits),
+                        ROUND(FV(monthly_rate, row, monthly_payment, loan_amount, type), rounding_digits),
+                        ROUND(-CUMIPMT(monthly_rate, months, -loan_amount, 1, row, type), rounding_digits),
+                        ROUND(-CUMPRINC(monthly_rate, months, -loan_amount, 1, row, type), rounding_digits)
+                    )
+                )
+            )
+        )
+    )
+))

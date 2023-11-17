@@ -21,13 +21,7 @@ Demo file is available in demo folder that demonstrates how to use this function
 
 **Get started quickly:** You could download the workbook `Demo/AutoXL-Demo.xlsx` where AutoXL has been already added. It also contains sample data and formulas which allow you to get familiar with use of functions. Formula Editor will be auto-opened.
 
-**Installation:** Besides using Microsoft's AFE, you could use [Formula Editor](https://www.10studio.tech/docs/formulaEditor) to add the AutoXL library to your workbook, which will provide a version control. The latest stable versions of AutoXL will always be available in Formula Editor.
-
-![alt text](Demo/VersionControl.gif)
-
-**Uninstallation:** To remove the library from your workbook, 
-- either you could go to "Name Manager" and manually delete all the functions starting with `A.` (make sure that you don't have other user-defined functions or ranged names starting with `A.`)
-- or under Formula Editor, you could go to "Libraries => AutoXL => Remove"; it will only remove AutoXL's functions.
+**Installation:** [...]
 
 ## License
 
@@ -39,9 +33,3 @@ You could [open an issue](https://github.com/jahanzaibriaz/jz_finance/issues).
 
 ## Full list of functions
 - `JZ.LOAN_SCHEDULE`: generates the loan schedule
-
-## Other resources
-
-- Video courses: [Spreadsheet Language and Programming](https://chengtie.thinkific.com/courses/excel-programming-en) and [表格语言与编程](https://study.163.com/course/courseMain.htm?courseId=1211128814&share=2&shareId=480000002246464)
-- Software for spreadsheets: [www.10studio.tech](https://www.10studio.tech)
-- Social media: [YouTube](https://www.youtube.com/watch?v=Jr1x1EnP1qA&list=PLOeixAylgNENCnQr9pUWjyAVFzJGbiOSX), [LinkedIn](https://www.linkedin.com/in/chengtie/)

@@ -1,7 +1,6 @@
 /*
-Repository: []
+Repository: [jz_finance/jz_finance_v0.1.txt]
 Contributor: @jahanzaibriaz
-TESTED: Microsoft Excel 365 []
 */
 
 // return the name and version of the library

@@ -14,7 +14,12 @@ JZ Finance consists of below categories of functions:
 Demo file is available in demo folder that demonstrates how to use this function
 
 ## Installation
-[...]
+1) Get Excel Labs add-in from https://aka.ms/get-afe
+2) On Home tab in Excel, click on Excel Lab
+3) Click on Modules
+4) Click on Import from URL button
+5) Enter this URL https://gist.github.com/jahanzaibriaz/ee2752fc71a5f6eb11aa0cb897486f39
+6) In any cell, enter "=JZ.Loan_Schedule(12%, 60, 100000)"
 
 ## License
 

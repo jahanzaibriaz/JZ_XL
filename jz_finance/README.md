@@ -11,7 +11,7 @@ JZ Finance consists of below categories of functions:
 
 ## Demo
 
-Demo file is available in demo folder that demonstrates how to use this function
+Demo file is available in [demo folder](https://github.com/jahanzaibriaz/JZ_XL/tree/main/jz_finance/Demo) that demonstrates how to use this function
 
 ## Installation
 1) Get Excel Labs add-in from https://aka.ms/get-afe

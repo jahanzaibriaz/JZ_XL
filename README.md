@@ -4,7 +4,7 @@
 
 ## Categories
 
-- `jz_finance` consists of various useful finance related functions 
+- `jz_finance` consists of various useful finance related functions. [Gist Link](https://gist.github.com/jahanzaibriaz/ee2752fc71a5f6eb11aa0cb897486f39)
 
 ## Installation
 

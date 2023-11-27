@@ -6,7 +6,7 @@
 
 JZ Finance consists of below categories of functions:
 - Full Schedules
-    - `JZ.Loan_Schedule` to generate a full loan amortization schedule for any loan. User can select which columns to display and in what order
+    - `JZ.Loan_Schedule` to generate a full loan amortization schedule for any loan. User can select which columns to display and in what order (For details: [Click here](Functions.md))
 - Single Data Point
 
 ## Demo
